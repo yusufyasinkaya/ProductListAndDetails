@@ -14,13 +14,67 @@ class ProductList extends StatefulWidget {
 }
 
 class _ProductListState extends State<ProductList> {
+  List<DataRes> list=[];
+  List<DataRes> search=[];
+  
+  
+  String data= "AllHere";
+  
+  String? get query => null;
+  TextEditingController _controller = TextEditingController();
 
   
-  
-  String data= "Allhere";
+  Widget showUsers(){
+    return Scaffold(
+      body: FutureBuilder<List<Product>>(
+            future: ResponseJsonApi().getDataJson(query),
+            builder: (context,snapshot){
+             if(snapshot.hasData){
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context,index){
+                    return ListTile(
+                      title: Text(snapshot.data![index].title??""),
+                      subtitle: Text(snapshot.data![index].price.toString()+" USD"),
+                      onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>   ProductDetail(
+                      title: snapshot.data![index].title??"",
+                      description: snapshot.data![index].description??"",
+                      images: snapshot.data![index].images!,
+                      rating: snapshot.data![index].rating!,
+                      price: snapshot.data![index].price!,
+                      brand: snapshot.data![index].brand??"",
+                      category: snapshot.data![index].category??"",
+                      discountPercentage: snapshot.data![index].discountPercentage!,
+
+                    ),
+                        )),
+                      leading: Container(
+                        width: 100,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(image: NetworkImage(snapshot.data![index].thumbnail??""))
+                        ),
+
+                      ),
+                    );
+
+                  },
+                );
+              } else{
+               return Center(child: CircularProgressIndicator(),);
+
+              }
+            },
+          ),
+    );
+
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -30,6 +84,8 @@ class _ProductListState extends State<ProductList> {
         child: Padding(padding: EdgeInsets.symmetric(vertical: 20,horizontal: 25),
         child: Column(children: [
           TextField(
+            onChanged: (query)=>showUsers(),
+            controller: _controller,
             style: TextStyle(color:Colors.black),
           decoration: InputDecoration(
             filled: true,
@@ -46,7 +102,7 @@ class _ProductListState extends State<ProductList> {
           ),
           SizedBox(height: 20,),
           Expanded(child: FutureBuilder<List<Product>>(
-            future: ResponseJsonApi().getDataJson(),
+            future: ResponseJsonApi().getDataJson(query),
             builder: (context,snapshot){
              if(snapshot.hasData){
                 return ListView.builder(

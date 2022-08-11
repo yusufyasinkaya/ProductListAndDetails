@@ -12,12 +12,14 @@ ResponseJsonApi(){
   _dio = Dio();
 }
 
-Future<List<Product>> getDataJson() async{   Response response = await _dio.get(_url);
+Future<List<Product>> getDataJson(String? query) async{   Response response = await _dio.get(_url);
 
-inspect(response.data);
    DataRes newResponse= DataRes.fromJson(response.data);
-   print(response.statusCode);
-  inspect(newResponse.products);
+  
+   if(query!=null){
+          newResponse.products = newResponse.products?.where((element)=>element.title!.toLowerCase().contains(query.toLowerCase())).toList();
+   }
+       
    return newResponse.products!;
    /*
   try {
