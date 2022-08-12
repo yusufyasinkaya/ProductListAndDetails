@@ -40,7 +40,9 @@ class _ProductListState extends State<ProductList> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(data,style: TextStyle(color: Colors.black),),
+        title: Image.asset('lib/assest/appbar.png',
+          width: MediaQuery.of(context).size.width*0.40,
+       ),
         
       ),
       drawer: Drawer(backgroundColor: Color.fromARGB(255, 255, 255, 255),elevation: 0.1,
@@ -52,6 +54,7 @@ class _ProductListState extends State<ProductList> {
           Text("Categories for you",style: TextStyle(color: Color.fromARGB(255, 213, 121, 0),fontWeight: FontWeight.bold,),),
            res.categories==null?Center(child: CircularProgressIndicator(),):
         Expanded(
+          
           child: ListView.builder(
               itemCount:res.categories!.length ,
               itemBuilder: (context , index){

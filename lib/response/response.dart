@@ -7,8 +7,8 @@ import 'package:providerr/models/product.dart';
 class ResponseJsonApi with ChangeNotifier{
  final  String _url = "https://dummyjson.com/products";
  final String _searchUrl= "https://dummyjson.com/products/search?q=";
- final String _categories = "https://dummyjson.com/products/categories/";
-
+ final String _categories = "https://dummyjson.com/products/categories";
+ final String _category = "https://dummyjson.com/products/category/";
 
   late Dio _dio;
   String? query;
@@ -75,13 +75,15 @@ Response response1 = await _dio.get(_categories);
   }
 
 
+List<Product>? category_product;
  Future<List<Product>> getCategoryDetail(String categoryName) async{
- 
-  Response response = await _dio.get(_categories+categoryName);
+  print(_categories+categoryName);
+  Response response = await _dio.get(_category+categoryName);
+  
   inspect(response);
   DataRes newResponse= DataRes.fromJson(response.data);
     notifyListeners();
-       
+       category_product= newResponse.products!;
    return newResponse.products!;
  }
 
