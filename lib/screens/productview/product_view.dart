@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:providerr/models/product.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 
 class ProductDetail extends StatelessWidget {
   final String title;
@@ -13,9 +14,11 @@ class ProductDetail extends StatelessWidget {
   final String brand;
   final String category;
   final double discountPercentage;
+  final double star;
 
 const ProductDetail(
       {
+        required this.star,
         required this.discountPercentage,
         required this.category,
         required this.price,
@@ -61,6 +64,9 @@ const ProductDetail(
              
               Text("$price USD",style: TextStyle(fontWeight: FontWeight.w600,color: Colors.black),),
                Text("Rating: $rating/5",style:TextStyle(color: Color.fromARGB(255, 255, 181, 9),fontWeight: FontWeight.bold),),
+               Center(
+                child: SmoothStarRating(starCount: 5, rating: star,color: Color.fromARGB(255, 255, 181, 9),),
+               ),
                Text(description,style: TextStyle(color: Colors.black,fontWeight: FontWeight.w400,fontStyle: FontStyle.italic),),
                Text("Category: $category",style: TextStyle(fontWeight: FontWeight.w300,color: Colors.black),),
                Text("%$discountPercentage percent off!",style: TextStyle(fontWeight: FontWeight.w800,color: Colors.red),)
@@ -69,5 +75,7 @@ const ProductDetail(
         ),
       );
     
+  
   }
+ 
 }

@@ -7,6 +7,7 @@ class DataRes{
     products:  (json["products"] as List).map((x) => Product.fromJson(x)).toList(),
     
     );
+
 }
 
 class Product {

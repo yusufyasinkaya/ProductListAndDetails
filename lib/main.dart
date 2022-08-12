@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:providerr/response/response.dart';
 import 'package:providerr/screens/productlist/product_list.dart';
 
 
 void main() {
   runApp(
-   MyApp(),
+   const MyApp(),
     );
 }
 
@@ -18,14 +20,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData.light().copyWith(
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black)
+          // ignore: unnecessary_const
+          iconTheme: const IconThemeData(color: Colors.black)
         )
     
       ),
-      home: ProductList(),
+      home:  ChangeNotifierProvider(create: (_)=> ResponseJsonApi(),child: const ProductList(),),
     );
   }
 }
