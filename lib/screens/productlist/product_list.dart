@@ -103,36 +103,43 @@ print(res.query);
           ?
 
 
-          ListView.builder(
+          ListView.separated(
+            separatorBuilder :(context, index) {
+              return Divider(
+                color: Colors.grey,
+              );
+            } ,
             itemCount:res.searchProductList!.length ,
             itemBuilder: (context , index){
-            return ListTile(
-              title: Text(res.searchProductList![index].title??""),
-             subtitle: Text(res.searchProductList![index].price.toString()+" USD"),
-              leading: Container(
-                        width: 100,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(image: NetworkImage(res.searchProductList![index].thumbnail??"")),
-                          
+            return Center(
+              child: ListTile(
+                title: Text(res.searchProductList![index].title??""),
+               subtitle: Text(res.searchProductList![index].price.toString()+" USD"),
+                leading: Container(
+                          width: 100,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(image: NetworkImage(res.searchProductList![index].thumbnail??"")),
+                            
+                          ),
+
                         ),
+                         onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>   ProductDetail(
+                        star: res.searchProductList![index].rating!,
+                        title: res.searchProductList![index].title??"",
+                        description: res.searchProductList![index].description??"",
+                        images: res.searchProductList![index].images!,
+                        rating: res.searchProductList![index].rating!,
+                        price: res.searchProductList![index].price!,
+                        brand: res.searchProductList![index].brand??"",
+                        category: res.searchProductList![index].category??"",
+                        discountPercentage: res.searchProductList![index].discountPercentage!,
 
                       ),
-                       onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>   ProductDetail(
-                      star: res.searchProductList![index].rating!,
-                      title: res.searchProductList![index].title??"",
-                      description: res.searchProductList![index].description??"",
-                      images: res.searchProductList![index].images!,
-                      rating: res.searchProductList![index].rating!,
-                      price: res.searchProductList![index].price!,
-                      brand: res.searchProductList![index].brand??"",
-                      category: res.searchProductList![index].category??"",
-                      discountPercentage: res.searchProductList![index].discountPercentage!,
-
-                    ),
-                        )),
+                          )),
+              ),
             ) ;
 
           })
