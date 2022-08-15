@@ -12,7 +12,7 @@ class CategoryDetail extends StatelessWidget {
   final ResponseJsonApi res;
 
 
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

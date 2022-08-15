@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:providerr/models/product.dart';
 import 'package:providerr/response/response.dart';
@@ -23,7 +24,9 @@ class _ProductListState extends State<ProductList> {
   List<DataRes> list=[];
   List<DataRes> search=[];
  
-  
+  final spinkit = SpinKitPouringHourGlass(
+  color: Colors.black,
+);
   
   
   String data= "AllHere";
@@ -52,7 +55,7 @@ class _ProductListState extends State<ProductList> {
           height: MediaQuery.of(context).size.height*0.35,
           ),
           Text("Categories for you",style: TextStyle(color: Color.fromARGB(255, 213, 121, 0),fontWeight: FontWeight.bold,),),
-           res.categories==null?Center(child: CircularProgressIndicator(),):
+           res.categories==null?Center(child:spinkit,):
         Expanded(
           
           child: ListView.builder(
@@ -184,7 +187,7 @@ print(res.query);
                   },
                 );
               } else{
-               return Center(child: CircularProgressIndicator(),);
+               return Center(child: spinkit,);
 
               }
             },
