@@ -25,38 +25,42 @@ class CategoryDetail extends StatelessWidget {
           return  ListView.builder(
             itemCount:snapshot.data!.length ,
             itemBuilder: (context , index){
-            return ListTile(
-              title: Text(snapshot.data![index].title??""),
-             subtitle: Text(snapshot.data![index].price.toString()+" USD"),
-              leading: Container(
-                        width: 100,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          image: DecorationImage(image: NetworkImage(snapshot.data?[index].thumbnail??""),
-                          
+            return Card(
+              elevation: 2,
+              shadowColor: Colors.black,
+              child: ListTile(
+                title: Text(snapshot.data![index].title??""),
+               subtitle: Text(snapshot.data![index].price.toString()+" USD"),
+                leading: Container(
+                          width: 100,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(image: NetworkImage(snapshot.data?[index].thumbnail??""),
+                            
+                          ),
+
                         ),
+                        
+                   
+              ),
+               onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>   ProductDetail(
+                        star: res.category_product![index].rating!,
+                        title: res.category_product![index].title??"",
+                        description: res.category_product![index].description??"",
+                        images: res.category_product![index].images!,
+                        rating: res.category_product![index].rating!,
+                        price: res.category_product![index].price!,
+                        brand: res.category_product![index].brand??"",
+                        category:res.category_product![index].category??"",
+                        discountPercentage: res.category_product![index].discountPercentage!,
 
                       ),
-                      
-                 
-            ),
-             onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>   ProductDetail(
-                      star: res.category_product![index].rating!,
-                      title: res.category_product![index].title??"",
-                      description: res.category_product![index].description??"",
-                      images: res.category_product![index].images!,
-                      rating: res.category_product![index].rating!,
-                      price: res.category_product![index].price!,
-                      brand: res.category_product![index].brand??"",
-                      category:res.category_product![index].category??"",
-                      discountPercentage: res.category_product![index].discountPercentage!,
-
-                    ),
-                        )),
-                        
-                        
+                          )),
+                          
+                          
+              ),
             );
 
           });
